@@ -4,16 +4,22 @@ pygame.init()
 
 # Tenho aqui vários pontos sobre uma circunferência
 
-d = 200
-cubo = np.array([[100,100,1,1],[300,100,1,1],[100,300,1,1],[300,300,1,1],[100,100,200,1],[300,100,200,1],[100,300,200,1],[300,300,200,1]]).T
+d = 250
+cubo = np.array([[-100,-100,-100,1],[100,-100,-100,1],[-100,100,-100,1],[100,100,-100,1],[-100,-100,100,1],[100,-100,100,1],[-100,100,100,1],[100,100,100,1]]).T
+
 
 M = np.array([[1,0,0,0],[0,1,0,0],[0,0,0,-d],[0,0,-(1/d),0]])
+Tz = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,350],[0,0,0,1]])
+T = np.array([[1,0,0,200],[0,1,0,200],[0,0,1,0],[0,0,0,1]])
 
-# Controle de tempo
-t = 0
 
-# Velocidade angular (rotacoes por segundo)
-v = 0.2
+a = np.deg2rad(1)
+rX = np.array([[1,0,0,0],[0,np.cos(a),-np.sin(a),0],[0,np.sin(a),np.cos(a),0],[0,0,0,1]])
+ry = np.array([[np.cos(a),0,-np.sin(a),0],[0,1,0,0],[np.sin(a),0,np.cos(a),0],[0,0,0,1]])
+rz = np.array([[np.cos(a),-np.sin(a),0,0],[np.sin(a),np.cos(a),0,0],[0,0,1,0],[0,0,0,1]])
+
+
+R = rX @ ry @ rz
 
 # Tamanho da tela e definição do FPS
 screen = pygame.display.set_mode((400, 400))
@@ -38,29 +44,35 @@ while rodando:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             rodando = False
-
-    # Controlar frame rate
     clock.tick(FPS)
-
-    # Movimento do personagem
-
-    # Desenhar fundo
     screen.fill(BLACK)
 
-    proj = M @ cubo
-
-    T = np.array([[1,0,0,200],[0,1,0,200],[0,0,1,0],[0,0,0,1]])
-
-    proj_t = T @ proj
+    E = T @ M @ Tz @ R
+    R = rX@ry@rz@R
+    proj = E @ cubo
 
     # Desenhar pontos
-    for p in range(proj_t.shape[1]):
-        point = proj_t[:,p]
-        
-        rect = pygame.Rect([point[0]/point[3],point[1]/point[3]], (2, 2))  # First tuple is position, second is size.
+    for i in range(proj.shape[1]):
+        p = proj[:,i]
+        rect = pygame.Rect([p[0]/p[3],p[1]/p[3]], (2, 2))  # First tuple is position, second is size.
         screen.blit(pontos, rect)
-    
+         
+    pygame.draw.line(screen,COR_PONTOS,(proj[0,0]/proj[3,0],proj[1,0]/proj[3,0]),(proj[0,1]/proj[3,1],proj[1,1]/proj[3,1]))
+    pygame.draw.line(screen,COR_PONTOS,(proj[0,1]/proj[3,1],proj[1,1]/proj[3,1]),(proj[0,3]/proj[3,3],proj[1,3]/proj[3,3]))
+    pygame.draw.line(screen,COR_PONTOS,(proj[0,3]/proj[3,3],proj[1,3]/proj[3,3]),(proj[0,2]/proj[3,2],proj[1,2]/proj[3,2]))
+    pygame.draw.line(screen,COR_PONTOS,(proj[0,0]/proj[3,0],proj[1,0]/proj[3,0]),(proj[0,2]/proj[3,2],proj[1,2]/proj[3,2]))
 
+    pygame.draw.line(screen,COR_PONTOS,(proj[0,4]/proj[3,4],proj[1,4]/proj[3,4]),(proj[0,5]/proj[3,5],proj[1,5]/proj[3,5]))
+    pygame.draw.line(screen,COR_PONTOS,(proj[0,5]/proj[3,5],proj[1,5]/proj[3,5]),(proj[0,7]/proj[3,7],proj[1,7]/proj[3,7]))
+    pygame.draw.line(screen,COR_PONTOS,(proj[0,7]/proj[3,7],proj[1,7]/proj[3,7]),(proj[0,6]/proj[3,6],proj[1,6]/proj[3,6]))
+    pygame.draw.line(screen,COR_PONTOS,(proj[0,6]/proj[3,6],proj[1,6]/proj[3,6]),(proj[0,4]/proj[3,4],proj[1,4]/proj[3,4]))
+
+    pygame.draw.line(screen,COR_PONTOS,(proj[0,0]/proj[3,0],proj[1,0]/proj[3,0]),(proj[0,4]/proj[3,4],proj[1,4]/proj[3,4]))
+    pygame.draw.line(screen,COR_PONTOS,(proj[0,1]/proj[3,1],proj[1,1]/proj[3,1]),(proj[0,5]/proj[3,5],proj[1,5]/proj[3,5]))
+    pygame.draw.line(screen,COR_PONTOS,(proj[0,2]/proj[3,2],proj[1,2]/proj[3,2]),(proj[0,6]/proj[3,6],proj[1,6]/proj[3,6]))
+    pygame.draw.line(screen,COR_PONTOS,(proj[0,3]/proj[3,3],proj[1,3]/proj[3,3]),(proj[0,7]/proj[3,7],proj[1,7]/proj[3,7]))
+
+    pygame.display.flip()
     # Update!
     pygame.display.update()
 
