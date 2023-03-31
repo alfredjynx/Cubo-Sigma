@@ -26,6 +26,8 @@ FPS = 60  # Frames per Second
 
 BLACK = (0, 0, 0)
 COR_ARESTAS = (224, 61, 20)
+laranja = (224, 61, 20)
+azul = (24, 8, 199)
 
 # Personagem
 personagem = pygame.Surface((5, 5))  # Tamanho do personagem
@@ -61,6 +63,10 @@ while rodando:
                 d = 6
             elif event.key == pygame.K_f:
                 free = not free
+                if COR_ARESTAS==laranja:
+                    COR_ARESTAS=azul
+                else:
+                    COR_ARESTAS=laranja
         elif event.type == pygame.KEYUP and not free:
             d=0
     R = direcao[d]@R
