@@ -34,7 +34,8 @@ personagem = pygame.Surface((5, 5))  # Tamanho do personagem
 personagem.fill(COR_ARESTAS)  # Cor do personagem
 
 r = rx@ry@rz
-R = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])
+ident = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])
+R =ident
 a = np.deg2rad(1)
 
 direcao = [np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]),np.linalg.inv(ry),ry,rx,np.linalg.inv(rx),rz,np.linalg.inv(rz)]
@@ -49,6 +50,9 @@ while rodando:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
                 rodando = False
+            elif event.key == pygame.K_r:
+                R = ident
+                d = 0
             elif event.key == pygame.K_d:
                 d = 1
             elif event.key == pygame.K_a:
