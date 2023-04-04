@@ -1,6 +1,11 @@
 import pygame
+import pygame.mixer
+
 import numpy as np
+
 pygame.init()
+musica = pygame.mixer.Sound("amor.mp3")
+musica.play()
 
 # Tenho aqui vários pontos sobre uma circunferência
 
