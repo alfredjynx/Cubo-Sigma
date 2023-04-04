@@ -7,7 +7,6 @@ pygame.init()
 musica = pygame.mixer.Sound("amor.mp3")
 musica.play()
 
-# Tenho aqui vários pontos sobre uma circunferência
 
 d = 200
 cubo = np.array([[-100,-100,-100,1],[100,-100,-100,1],[-100,100,-100,1],[100,100,-100,1],[-100,-100,100,1],[100,-100,100,1],[-100,100,100,1],[100,100,100,1]]).T
@@ -44,9 +43,11 @@ R =ident
 a = np.deg2rad(1)
 
 direcao = [np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]),np.linalg.inv(ry),ry,rx,np.linalg.inv(rx),rz,np.linalg.inv(rz)]
-d = 0
+dir = 0
 rodando = True
 free = True
+mais_d = False
+menos_d = False
 while rodando:
     # Capturar eventos
     for event in pygame.event.get():
@@ -57,30 +58,44 @@ while rodando:
                 rodando = False
             elif event.key == pygame.K_r:
                 R = ident
-                d = 0
+                dir = 0
             elif event.key == pygame.K_d:
-                d = 1
+                dir = 1
             elif event.key == pygame.K_a:
-                d = 2
+                dir = 2
             elif event.key == pygame.K_w:
-                d = 3
+                dir = 3
             elif event.key == pygame.K_s:
-                d = 4
+                dir = 4
             elif event.key == pygame.K_l:
-                d = 5
+                dir = 5
             elif event.key == pygame.K_k:
-                d = 6
-            elif event.key == pygame.K_f:
+                dir = 6
+            if event.key == pygame.K_UP:
+                mais_d = True
+            if event.key == pygame.K_DOWN:
+                menos_d = True
+            if event.key == pygame.K_f:
                 free = not free
                 if COR_ARESTAS==laranja:
                     COR_ARESTAS=azul
                 else:
                     COR_ARESTAS=laranja
-        elif event.type == pygame.KEYUP and not free:
-            d=0
-    R = direcao[d]@R
+        elif event.type == pygame.KEYUP:
+            if not free:
+                dir=0
+            mais_d,menos_d=False,False
+
+    if mais_d:
+        d+=1
+    elif menos_d:
+        d-=1
+
+    R = direcao[dir]@R
     clock.tick(FPS)
     screen.fill(BLACK)
+
+    M = np.array([[1,0,0,0],[0,1,0,0],[0,0,0,-d],[0,0,-(1/d),0]])
 
     E = T @ M @ Tz @ R
     proj = E @ cubo
