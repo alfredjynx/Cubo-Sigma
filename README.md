@@ -1,4 +1,4 @@
-# Cubo-Sigma
+# Cubo Sigma - Alfredo e Marcelo
 
 
 ### Funcionalidade de código - 
