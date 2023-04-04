@@ -1,4 +1,4 @@
-# Cubo-$\Sigma$
+# Cubo-Sigma
 
 
 ### Funcionalidade de código - 
