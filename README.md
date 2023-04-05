@@ -7,7 +7,7 @@ Para rodar nosso programa, basta clonar o respositório onde este documento est�
 
 O cubo é completamente controlável, com dois modos e direções possíveis. As direções são mais simples de serem explicadas. As teclas "a" (esquerda) e "d" (direita) direcionam o quadrado a se mover em relação ao eixo Y do pygame (nosso eixo X). As teclas "w" (cima) e "s" (baixo) direcionam o quadrado a se mover em relação ao eixo X do pygame (nosso eixo Y). As teclas "k" (anti-horário) e "f" (horário) direcionam o quadrado a se mover em relação ao eixo Z do pygame. O primeiro modo é o "laranja". Nessa situação, o cubo se apresenta com a cor laranja, e roda continuamente na direção escolhida, e muda de direção quando uma nova tecla é apertada. O segunda é o modo "azul", onde o cubo é azul e se move de maneira discreta, também na direção escolhida pelo operador. Há como mudar entre os modos utilizando a tecla "f", que inverte o modo no qual você se encontra. Para voltar ao estado inicial basta aperta "r", o botão de reset.
 
-Há também como aumentar ou diminuir a distância focal da projeção, utilizando as setas do teclado. Para cima é mais, e para baixo é menos
+Há também como aumentar ou diminuir a distância focal da projeção, utilizando as setas do teclado e o scroll do mouse. Para cima é mais (seta pra cima ou scroll pra cima), e para baixo é menos (seta para baixo ou scroll para baixo).
 
 Após essa extensa explicação, está na hora de se divertir e se maravilhar com essa experiência matemática cortezia de Marcelo Marchetto e João Alfredo. 
 
