@@ -117,7 +117,13 @@ while rodando:
                 else:
                     COR_ARESTAS=laranja
 
-        # se algua tecla for levantada
+        elif event.type == pygame.MOUSEWHEEL:
+            if event.y>0:
+                d += 10
+            elif event.y<0 and d>1:
+                d -= 10
+
+        # se alguma tecla for levantada
         elif event.type == pygame.KEYUP:
 
             # se o modo não for contínuo, voltar a rotação a identidade
@@ -127,10 +133,11 @@ while rodando:
             # zera o processod e mudar a distância
             mais_d,menos_d=False,False
 
+
     # muda a distância
     if mais_d:
         d+=1
-    elif menos_d:
+    elif menos_d and d>1:
         d-=1
 
     # cria a matriz de rotação
